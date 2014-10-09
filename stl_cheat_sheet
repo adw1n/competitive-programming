@@ -15,6 +15,10 @@ template <class InputIterator, class T>
     count (InputIterator first, InputIterator last, const T& val);
 Returns the number of elements in the range [first,last) that compare equal to val.
 
+template <class ForwardIterator>
+  ForwardIterator max_element (ForwardIterator first, ForwardIterator last);
+Returns an iterator pointing to the element with the largest value in the range [first,last).
+
 
 swap
 
@@ -62,7 +66,10 @@ template <class BidirectionalIterator>
 Rearranges the elements in the range [first,last) into the previous lexicographically-ordered permutation.
 
 
-
+cstring 
+void * memset ( void * ptr, int value, size_t num ); value is unsigned char (-1) works
+Sets the first num bytes of the block of memory pointed by ptr to the specified value (interpreted as an unsigned char).
+usage: memset(tab,-1,sizeof(tab));
 string
 
 string::replace
@@ -84,3 +91,29 @@ Parses the C-string str interpreting its content as an integral number, which is
 
 using rand() - srand(time(NULL)); rand()%yourMod;
 
+set interface:
+begin,end,rbegin,rend,empty,size, insert,erase (iterator,value or iterator first and second),find!,count,lower_bound!,upper_bound!
+
+cmath: pow,sqrt
+
+sstream and ostringstream
+int i = 42;
+ostringstream ss;
+ss << i;
+string str = ss.str();
+
+printf scanf 
+%d int
+%lld long long int
+%c char
+%f float
+%lf double
+%s char*
+
+\" = quotation mark (") (backslash not required for '"')
+\' = apostrophe (') (backslash not required for "'")
+\? = question mark (used to avoid trigraphs)
+\\ = backslash (\)
+\r	carriage return	byte 0x0d in ASCII encoding
+\t	horizontal tab	byte 0x09 in ASCII encoding
+\v	vertical tab
