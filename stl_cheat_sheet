@@ -3,8 +3,6 @@ template <class InputIterator, class T>
    T accumulate (InputIterator first, InputIterator last, T init);
 Returns the result of accumulating all the values in the range [first,last) to init.
 
-
-
 algorithm
 template <class InputIterator, class T>
    InputIterator find (InputIterator first, InputIterator last, const T& val);
@@ -18,7 +16,6 @@ Returns the number of elements in the range [first,last) that compare equal to v
 template <class ForwardIterator>
   ForwardIterator max_element (ForwardIterator first, ForwardIterator last);
 Returns an iterator pointing to the element with the largest value in the range [first,last).
-
 
 swap
 
@@ -70,6 +67,7 @@ cstring
 void * memset ( void * ptr, int value, size_t num ); value is unsigned char (-1) works
 Sets the first num bytes of the block of memory pointed by ptr to the specified value (interpreted as an unsigned char).
 usage: memset(tab,-1,sizeof(tab));
+
 string
 
 string::replace
@@ -78,12 +76,10 @@ Replaces the portion of the string that begins at character pos and spans len ch
 
 const char* c_str() const; use like this - yourString.c_str();
 
-
 string substr (size_t pos = 0, size_t len = npos) const;
 The substring is the portion of the object that starts at character position pos and spans len characters (or until the end of the string, whichever comes first).
 
 <utility> make_pair, pair
-
 
 cstdlib
 int atoi (const char * str); atol - long intiger, atof - double,
