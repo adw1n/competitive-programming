@@ -4,8 +4,6 @@ template <class InputIterator, class T>
 Returns the result of accumulating all the values in the range [first,last) to init.
 
 
-string substr (size_t pos = 0, size_t len = npos) const;
-The substring is the portion of the object that starts at character position pos and spans len characters (or until the end of the string, whichever comes first).
 
 algorithm
 template <class InputIterator, class T>
@@ -29,11 +27,11 @@ template <class RandomAccessIterator, class Compare>
   void sort (RandomAccessIterator first, RandomAccessIterator last, Compare comp);
 to sort in descending order comp=greater<int>()
 
-stable_sort
+stable_sort,min, max
 
 template <class ForwardIterator, class T>
   ForwardIterator lower_bound (ForwardIterator first, ForwardIterator last,
-                               const T& val); you can add ,Compare comp after the last parameter
+                               const T& val); you can add ,Compare comp after the last parameter (like in majority of STL functions)
 Returns an iterator pointing to the first element in the range [first,last) which does not compare less than val.
 
 template <class ForwardIterator, class T>
@@ -46,4 +44,43 @@ template <class ForwardIterator, class T>
                       const T& val);	
 Test if value exists in sorted sequence
 Returns true if any element in the range [first,last) is equivalent to val, and false otherwise.
+
+
+template <class InputIterator1, class InputIterator2>
+  bool lexicographical_compare (InputIterator1 first1, InputIterator1 last1,
+                                InputIterator2 first2, InputIterator2 last2);
+Returns true if the range [first1,last1) compares lexicographically less than the range [first2,last2).
+
+template <class BidirectionalIterator>
+  bool next_permutation (BidirectionalIterator first,
+                         BidirectionalIterator last);
+Rearranges the elements in the range [first,last) into the next lexicographically greater permutation.
+
+template <class BidirectionalIterator>
+  bool prev_permutation (BidirectionalIterator first,
+                         BidirectionalIterator last );
+Rearranges the elements in the range [first,last) into the previous lexicographically-ordered permutation.
+
+
+
+string
+
+string::replace
+string& replace (size_t pos,  size_t len,  const string& str);
+Replaces the portion of the string that begins at character pos and spans len characters (or the part of the string in the range between [i1,i2)) by new contents:
+
+const char* c_str() const; use like this - yourString.c_str();
+
+
+string substr (size_t pos = 0, size_t len = npos) const;
+The substring is the portion of the object that starts at character position pos and spans len characters (or until the end of the string, whichever comes first).
+
+<utility> make_pair, pair
+
+
+cstdlib
+int atoi (const char * str); atol - long intiger, atof - double,
+Parses the C-string str interpreting its content as an integral number, which is returned as a value of type int.
+
+using rand() - srand(time(NULL)); rand()%yourMod;
 
