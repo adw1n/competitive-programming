@@ -113,3 +113,8 @@ printf scanf
 \r	carriage return	byte 0x0d in ASCII encoding
 \t	horizontal tab	byte 0x09 in ASCII encoding
 \v	vertical tab
+
+? : example:  return (a*a <= r2 && r2 <= b*b) ? "Able" : "Not able";
+
+g++ -Wall -o file file.cpp
+./file < data
