@@ -9,7 +9,7 @@
 #include <utility> //swap
 #include <map>
 #include <cmath>
-
+#include <functional> //for greater<>
 using namespace std;
 
 typedef vector<int> VI;

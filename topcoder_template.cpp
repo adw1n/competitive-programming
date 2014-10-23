@@ -9,6 +9,7 @@
 #include <utility> 
 #include <map>
 #include <cmath>
+#include <functional>
 
 using namespace std;
 
