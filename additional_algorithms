@@ -40,3 +40,73 @@ a^(p -1) ≡ 1 (mod p)
 The number of divisors:
 If n = p1^a1+p2^a2+…., then the number of its positive divisors equals to
 (a1 + 1) * (a2 + 1) * … * (ak + 1)
+
+floyd-warshall
+for(i=1 to n) adj[i][j]=0;
+for (k = 1 to n)
+ for (i = 1 to n)
+  for (j = 1 to n)
+   adj[i][j] = min(adj[i][j], adj[i][k] + adj[k][j]);
+
+int N; // number of vertices
+vvi W; // lists of adjacent vertices
+     
+ bool check_graph_connected_bfs() { 
+      int start_vertex = 0; 
+      vi V(N, false); 
+      queue<int> Q; 
+      Q.push(start_vertex); 
+      V[start_vertex] = true; 
+      while(!Q.empty()) { 
+           int i = Q.front(); 
+           // get the tail element from queue
+           Q.pop(); 
+           tr(W[i], it) { 
+                if(!V[*it]) { 
+                     V[*it] = true; 
+                     Q.push(*it); 
+                } 
+           } 
+      } 
+      return (find(all(V), 0) == V.end()); 
+ }  
+
+
+priority_queue<ii,vector<ii>, greater<ii> > Q; 
+      // priority_queue with reverse comparison operator, 
+      // so top() will return the least distance
+      // initialize the start vertex, suppose it’s zero
+
+Dijikstra
+vi D(N, 987654321);
+
+      // start vertex
+      set<ii> Q;
+      D[0] = 0;
+      Q.insert(ii(0,0));
+ 
+      while(!Q.empty()) {
+
+           // again, fetch the closest to start element 
+           // from “queue” organized via set
+           ii top = *Q.begin();
+           Q.erase(Q.begin());
+           int v = top.second, d = top.first;
+ 
+           // here we do not need to check whether the distance 
+           // is perfect, because new vertices will always
+           // add up in proper way in this implementation
+
+           tr(G[v], it) {
+                int v2 = it->first, cost = it->second;
+                if(D[v2] > D[v] + cost) {
+                     // this operation can not be done with priority_queue, 
+                     // because it does not support DECREASE_KEY
+                     if(D[v2] != 987654321) {
+                           Q.erase(Q.find(ii(D[v2],v2)));
+                     }
+                     D[v2] = D[v] + cost;
+                     Q.insert(ii(D[v2], v2));
+                }
+           }
+      }
