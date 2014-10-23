@@ -118,3 +118,5 @@ printf scanf
 
 g++ -Wall -o file file.cpp
 ./file < data
+
+vector reserve i resize
