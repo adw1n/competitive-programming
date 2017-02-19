@@ -5,11 +5,11 @@
 #include <vector>
 #include <cstring>
 #include <set>
-#include <numeric> //accumulate(i poczatek,i koniec, wartosc_poczatkowa)
-#include <utility> //swap
+#include <numeric>
+#include <utility>
 #include <map>
 #include <cmath>
-#include <functional> //for greater<>
+#include <functional>
 using namespace std;
 
 typedef vector<int> VI;
@@ -28,18 +28,14 @@ typedef long long LL;
 #define MP make_pair
 int main (int argc, char * const argv[]) {
 	#ifndef ONLINE_JUDGE
-	//tworzy plik - pierwsze odpalenie
-	if(!freopen("in1.txt", "w+", stdin)) cout<<"Blad tworzenia in.txt"<<endl;
-	if(!freopen("in2.txt", "w+", stdin)) cout<<"Blad tworzenia in.txt"<<endl;
-	if(!freopen("in3.txt", "w+", stdin)) cout<<"Blad tworzenia in.txt"<<endl;
-	if(!freopen("in4.txt", "w+", stdin)) cout<<"Blad tworzenia in.txt"<<endl;
-	if(!freopen("in5.txt", "w+", stdin)) cout<<"Blad tworzenia in.txt"<<endl;
-	if(!freopen("in1.txt", "r", stdin)) cout<<"Blad odczytu in.txt"<<endl;
-	//if(!freopen("out.txt", "w", stdout)) cout<<"Blad pliku wyjsciowego"<<endl;
+	std::string input_file="in1.txt";
+	std::string output_file="out.txt";
+	if(!freopen(input_file.c_str(), "r", stdin)) cout<<"Something went wrong with the input file: "<<input_file<<endl;
+	//if(!freopen(output_file.c_str(), "w", stdout)) cout<<"Something went wrong with the output file."<<endl;
 	#endif
 	ios_base::sync_with_stdio(0);
-	
-	
-	
-    return 0;
+
+
+
+	return 0;
 }
