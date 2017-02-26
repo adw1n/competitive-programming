@@ -26,6 +26,14 @@ typedef long long LL;
 #define ST first
 #define ND second
 #define MP make_pair
+#define PRINT_OBJECT(obj) for(auto i: obj) cout<<i<<" "; cout<<endl;
+
+#ifndef ONLINE_JUDGE
+#define DEBUG(x) x
+#else
+#define DEBUG(x)
+#endif
+
 int main (int argc, char * const argv[]) {
 	#ifndef ONLINE_JUDGE
 	std::string input_file="in1.txt";
