@@ -15,7 +15,7 @@ prepare-workspace --help
 ```
 
 #### fetch-cf-examples (fetching codeforces input & output for each problem)
-Another tool that I use is the [fetch_cf_examples.sh](fetch_cf_examples.sh) script that downloads examples (testcases - pairs of input & output for each problem) from [codeforces](http://codeforces.com) contests.
+Another tool that I use is the [fetch_cf_examples.sh](fetch_cf_examples.py) script that downloads examples (testcases - pairs of input & output for each problem) from [codeforces](http://codeforces.com) contests.
 
 fetch_cf_examples.sh install:
 ```bash
