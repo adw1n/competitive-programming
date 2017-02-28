@@ -48,12 +48,3 @@ I'm also working on making it able to not specify a contest - fetch-cf-examples 
 
 
 [stl_cheat_sheet](stl_cheat_sheet) and [additional_algorithms](additional_algorithms) is what I have printed out and sometimes take to offline competitions.
-
-#### Links - my online profiles
-topcoder handle: [adwin_](https://www.topcoder.com/members/adwin_/details/?track=DATA_SCIENCE&subTrack=SRM)
-
-codeforces handle: [adwin_](http://codeforces.com/profile/adwin_)
-
-spoj handle (I'm not active there anymore): [adwin_](http://www.spoj.com/users/adwin_/)
-
-polish spoj (I'm not active there anymore): [adwin_](http://pl.spoj.com/users/adwin_/)
