@@ -70,7 +70,7 @@ class Codeforces:
         pass
     @staticmethod
     def _get_user_rating(handle: str)->int:
-        response = requests.get("http://codeforces.com/api/user.info?%s"%(urllib.urlencode({"handle":handle})))
+        response = requests.get("http://codeforces.com/api/user.info?%s"%(urllib.parse.urlencode({"handles":handle})))
         assert response.status_code==200, "Could not fetch user rating using Codeforces API - response status %s"%response.status_code
         api_info=json.loads(response.content.decode("utf-8"))
         results = api_info.get("result")  # type: typing.List[typing.Dict[str,typing.Any]]
@@ -118,13 +118,21 @@ class Codeforces:
         return [Codeforces.get_problem(link) for link in problem_links]
     @staticmethod
     def get_currently_running_contest()->str:
-        """
-        throws NoContestRunning if not contest is running
-        TODO virtual participation contests
-        :return:
-        """
-        raise NotImplementedError("I'll have to test this later, during a competition.")
-        pass
+        contests_page=requests.get("http://codeforces.com/contests/")
+        assert contests_page.status_code==200, "Could not open the contest page"
+        user_division=Codeforces._get_user_division()
+        tree=lxml.html.fromstring(contests_page.content)
+        for contest in tree.xpath("//tr[@data-contestid]"):
+            contest_id=contest.get("data-contestid")  # type: str
+            if "Div. %s"%user_division.value not in lxml.html.tostring(contest,encoding="unicode"):
+                continue
+            red_enter_links=contest.xpath('.//a[@class="red-link"]')  # type: typing.List[lxml.html.HtmlElement]
+            for red_enter_link in red_enter_links:
+                contest_link= Codeforces._extract_contest_link(red_enter_link.get("href"))
+                assert Codeforces.CONTEST_LINK_PATTERN.match(contest_link).group(1) == contest_id
+                return contest_link
+        else:
+            raise Codeforces.NoContestRunning("No contest for your division is running. Please use the --link option to specify the direct link to the contest.")
     @staticmethod
     def _extract_contest_link(contest_link: str)->str:
         """
