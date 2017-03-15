@@ -64,8 +64,7 @@ class Division(enum.IntEnum):
     TWO=2
 class Codeforces:
     CONTEST_GENERIC_URL="http://codeforces.com/contest/%s"
-    #TODO http://www.codeforces.com/contest/1a should not be validated - fix regex
-    CONTEST_LINK_PATTERN=re.compile("(http://)?(www\.)?codeforces.com/contest/(\d+?)(/.*)?")
+    CONTEST_LINK_PATTERN=re.compile("^(http://)?(www\.)?codeforces.com/contest/(\d+?)(/+.*)?$")
     class NoContestRunning(Exception):
         pass
     @staticmethod
@@ -118,10 +117,12 @@ class Codeforces:
         return [Codeforces.get_problem(link) for link in problem_links]
     @staticmethod
     def get_currently_running_contest()->str:
-        contests_page=requests.get("http://codeforces.com/contests/")
+        CONTESTS_URL="http://codeforces.com/contests/"
+        contests_page=requests.get(CONTESTS_URL)
         assert contests_page.status_code==200, "Could not open the contest page"
         user_division=Codeforces._get_user_division()
         tree=lxml.html.fromstring(contests_page.content)
+        tree.make_links_absolute(CONTESTS_URL)
         for contest in tree.xpath("//tr[@data-contestid]"):
             contest_id=contest.get("data-contestid")  # type: str
             if "Div. %s"%user_division.value not in lxml.html.tostring(contest,encoding="unicode"):
@@ -140,7 +141,7 @@ class Codeforces:
         also some validation would be nice - use re.match to extract the contest id
         """
         found=Codeforces.CONTEST_LINK_PATTERN.match(contest_link)
-        assert found, "Invalid contest link: %s - link did not match the pattern: "%(contest_link,Codeforces.CONTEST_LINK_PATTERN.pattern)
+        assert found, "Invalid contest link: %s - link did not match the pattern: %s"%(contest_link,Codeforces.CONTEST_LINK_PATTERN.pattern)
         for i in found.groups():
             if i == "http://" or i == "www." or not i:
                 continue
