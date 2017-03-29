@@ -68,6 +68,9 @@ class Codeforces:
     class NoContestRunning(Exception):
         pass
     @staticmethod
+    def get_contest_id_from_contest_link(contest_link: str)->str:
+        return Codeforces.CONTEST_LINK_PATTERN.match(contest_link).group(3)
+    @staticmethod
     def _get_user_rating(handle: str)->int:
         response = requests.get("http://codeforces.com/api/user.info?%s"%(urllib.parse.urlencode({"handles":handle})))
         assert response.status_code==200, "Could not fetch user rating using Codeforces API - response status %s"%response.status_code
@@ -121,6 +124,7 @@ class Codeforces:
         contests_page=requests.get(CONTESTS_URL)
         assert contests_page.status_code==200, "Could not open the contest page"
         user_division=Codeforces._get_user_division()
+        print("Downloading division %s"%user_division.value)
         tree=lxml.html.fromstring(contests_page.content)
         tree.make_links_absolute(CONTESTS_URL)
         for contest in tree.xpath("//tr[@data-contestid]"):
@@ -130,7 +134,7 @@ class Codeforces:
             red_enter_links=contest.xpath('.//a[@class="red-link"]')  # type: typing.List[lxml.html.HtmlElement]
             for red_enter_link in red_enter_links:
                 contest_link= Codeforces._extract_contest_link(red_enter_link.get("href"))
-                assert Codeforces.CONTEST_LINK_PATTERN.match(contest_link).group(1) == contest_id
+                assert Codeforces.get_contest_id_from_contest_link(contest_link) == contest_id
                 return contest_link
         else:
             raise Codeforces.NoContestRunning("No contest for your division is running. Please use the --link option to specify the direct link to the contest.")
@@ -155,8 +159,7 @@ class Codeforces:
         if not contest_link:
             contest_link=Codeforces.get_currently_running_contest()
         else:
-            pass
-            # contest_link=Codeforces._extract_contest_link(contest_link)
+            contest_link=Codeforces._extract_contest_link(contest_link)
         problems = Codeforces.get_problems(contest_link)
         assert problems
         if not contest_full_path:

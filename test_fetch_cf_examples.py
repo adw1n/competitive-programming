@@ -15,5 +15,11 @@ class TestCodeforces(unittest.TestCase):
     def test_extract_contest_link_does_not_accept_wrong_contest_links(self):
         invalid_contest_link="http://www.codeforces.com/contest/1a"
         self.assertRaises(AssertionError,fetch_cf_examples.Codeforces._extract_contest_link,invalid_contest_link)
+    def test_get_contest_id_out_of_link_with_http(self):
+        self.assertEqual(fetch_cf_examples.Codeforces.CONTEST_LINK_PATTERN.match("http://codeforces.com/contest/789").group(3),'789')
+    def test_get_contest_id_out_of_link_without_http(self):
+        self.assertEqual(fetch_cf_examples.Codeforces.CONTEST_LINK_PATTERN.match("codeforces.com/contest/789").group(3),'789')
+    def test_get_contest_id_out_of_link_with_www(self):
+        self.assertEqual(fetch_cf_examples.Codeforces.CONTEST_LINK_PATTERN.match("www.codeforces.com/contest/789").group(3),'789')
 if __name__ == '__main__':
     unittest.main()
