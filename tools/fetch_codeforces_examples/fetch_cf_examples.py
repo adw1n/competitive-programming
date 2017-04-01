@@ -167,9 +167,9 @@ class Codeforces:
         print("Downloading examples from: %s to %s" % (contest_link, contest_full_path))
         for problem in problems:
             problem.write(contest_full_path)
-def handle_username_hange(new_username: str):
+def handle_username_change(new_username: str):
     raise NotImplementedError()
-def handle_contest_directory_hange(new_contest_directory: str):
+def handle_contest_directory_change(new_contest_directory: str):
     raise NotImplementedError()
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
