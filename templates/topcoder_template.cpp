@@ -27,6 +27,8 @@ typedef long long LL;
 #define ST first
 #define ND second
 #define MP make_pair
+#define PRINT_OBJECT(obj) for(auto i: obj) cout<<i<<" "; cout<<endl;
+
 
 struct a {
 	

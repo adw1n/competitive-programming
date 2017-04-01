@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 GENERIC_SOLUTIONS_DIR=~/algo_competitions
-SCRIPT_DIR="$(dirname "$(readlink -f "$0")")" #will follow symlink if need to
+SCRIPT_DIR="$(dirname "$(readlink -f "$0")")" #will follow symlink if it needs to
+TEMPLATES_DIR=$SCRIPT_DIR/../../templates
 
 function print_help() {
   echo "This script creates Codeblocks projects that use my templates."
@@ -26,11 +27,11 @@ case $key in
     ;;
     -cf|--codeforces)
     TYPE="cf"
-    TEMPLATE="codeforces_template.cpp"
+    TEMPLATE=codeforces_template.cpp
     ;;
     -tc|--topcoder)
     TYPE="tc"
-    TEMPLATE="topcoder_template.cpp"
+    TEMPLATE=topcoder_template.cpp
     ;;
     -h|--help)
     print_help
@@ -73,7 +74,7 @@ set -e
 for task_name in {A..H}
 do
   mkdir $GENERIC_SOLUTIONS_DIR/$NAME/$task_name
-  cp $SCRIPT_DIR/$TEMPLATE $GENERIC_SOLUTIONS_DIR/$NAME/$task_name/main.cpp
+  cp $TEMPLATES_DIR/$TEMPLATE $GENERIC_SOLUTIONS_DIR/$NAME/$task_name/main.cpp
   cp $SCRIPT_DIR/CodeblocksProjectFile.cbp $GENERIC_SOLUTIONS_DIR/$NAME/$task_name/$task_name.cbp
   sed -i "s/MyProjectName/$task_name/g" $GENERIC_SOLUTIONS_DIR/$NAME/$task_name/$task_name.cbp
   for i in {1..10}
