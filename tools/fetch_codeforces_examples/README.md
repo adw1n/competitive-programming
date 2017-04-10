@@ -1,4 +1,5 @@
 This script downloads examples (testcases - pairs of input & output for each problem) from [codeforces](http://codeforces.com) contests.
+![Screenshot](screenshot.gif)
 
 fetch_cf_examples.sh install:
 ```bash
