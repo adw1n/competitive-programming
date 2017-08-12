@@ -197,7 +197,7 @@ def handle_contest_directory_change(new_contest_directory: str):
     raise NotImplementedError()
 
 
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--demo", action="store_true", help="examples will be written to /tmp/codeforces/")
     parser.add_argument("-n", "--contest-name", help="contest name - for example ct403 for Codeforces Round #403")
@@ -215,3 +215,6 @@ if __name__ == "__main__":
         contest_name=args.contest_name,
         contest_full_path=args.contest_dir if not args.demo else "/tmp/codeforces/"
     )
+
+if __name__ == "__main__":
+    main()
