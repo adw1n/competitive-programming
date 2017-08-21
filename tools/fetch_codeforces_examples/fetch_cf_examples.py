@@ -6,9 +6,12 @@ import enum
 import json
 import urllib
 import argparse
+import asyncio
+
 import lxml.html
 import requests
 import lxml.etree
+import aiohttp.client
 
 HOME = os.path.expanduser("~")
 USERNAME = "adwin_"  # type: str
@@ -116,10 +119,11 @@ class Codeforces:
             return Division.ONE
 
     @staticmethod
-    def get_problem(link: str) -> Problem:
-        page = requests.get(link)
-        assert page.status_code == 200, "Page %s is not accessible - request status code %s" % (link, page.status_code)
-        tree = lxml.html.fromstring(page.content)
+    @asyncio.coroutine
+    def get_problem(session: aiohttp.client.ClientSession, link: str) -> Problem:
+        page = yield from session.get(link)
+        assert page.status == 200, "Page %s is not accessible - request status code %s" % (link, page.status_code)
+        tree = lxml.html.fromstring((yield from page.text()))
         inputs = []  # type: typing.List[str]
         outputs = []  # type: typing.List[str]
         for test_div in tree.xpath("//div[@class='sample-test']"):
@@ -134,7 +138,8 @@ class Codeforces:
                        examples=[Example(inputs[index], outputs[index]) for index in range(len(inputs))])
 
     @staticmethod
-    def get_problems(contest_link: str) -> typing.List[Problem]:
+    @asyncio.coroutine
+    def get_problems(loop: asyncio.BaseEventLoop, contest_link: str) -> typing.List[Problem]:
         contest = requests.get(contest_link)
         assert contest.status_code == 200,\
             "Could not fetch contest page: %s status code: %s" % (contest_link, contest.status_code)
@@ -144,7 +149,10 @@ class Codeforces:
         for element, attribute, link, pos in tree.iterlinks():
             if Problem.PROBLEM_LINK_PATTERN.match(link):
                 problem_links.add(link)
-        return [Codeforces.get_problem(link) for link in problem_links]
+
+        with aiohttp.ClientSession(loop=loop) as session:
+            tasks = [Codeforces.get_problem(session, link) for link in problem_links]
+            return (yield from asyncio.gather(*tasks))
 
     @staticmethod
     def get_currently_running_contest()->str:
@@ -190,7 +198,9 @@ class Codeforces:
             contest_link = Codeforces.get_currently_running_contest()
         else:
             contest_link = Codeforces._extract_contest_link(contest_link)
-        problems = Codeforces.get_problems(contest_link)
+        loop = asyncio.get_event_loop()
+        problems = loop.run_until_complete(Codeforces.get_problems(loop, contest_link))
+        loop.close()
         assert problems
         if not contest_full_path:
             contest_full_path = os.path.join(CONTEST_DIR, contest_name)
@@ -208,7 +218,7 @@ def handle_contest_directory_change(new_contest_directory: str):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--demo", action="store_true", help="examples will be written to /tmp/codeforces/")
-    parser.add_argument("-n", "--contest-name", help="contest name - for example ct403 for Codeforces Round #403")
+    parser.add_argument("-n", "--contest-name", help="contest name - for example ct403 for Codeforces Round #403. Used to determine the output directory.")
     parser.add_argument("-d", "--contest-dir", help="path to contest directory to save examples in")
     parser.add_argument("-l", "--link", help="link to the contest (or any of the examples in the contest) - "
                                              "for example: http://codeforces.com/contest/779")
