@@ -1,15 +1,19 @@
 This script downloads examples (testcases - pairs of input & output for each problem) from [codeforces](http://codeforces.com) contests.
 ![Screenshot](screenshot.gif)
 
-fetch_cf_examples.sh install:
+fetch-cf-examples install:
 ```bash
-git clone https://github.com/adw1n/competitive-programming ~/bin/competitive-programming/
-sudo ln -s ~/bin/competitive-programming/tools/fetch_codeforces_examples/fetch_cf_examples.py /usr/local/bin/fetch-cf-examples
+git clone https://github.com/adw1n/competitive-programming
+sudo pip3 install competitive-programming/tools/fetch_codeforces_examples
 ```
+fetch-cf-examples uninstall:
+```bash
+sudo pip3 uninstall fetch-codeforces-examples
+```
+
 Requirements:
-* python3
-* if your default python3 verison is older than 3.5 you will need to install the typing module:  
-sudo pip3 install typing
+* python >= 3.4
+
 
 fetch-cf-examples usage:
 ```bash
@@ -19,7 +23,7 @@ fetch-cf-examples --demo --link http://codeforces.com/contest/777 #will save to 
 Real usage:
 ```bash
 #examples saved to ~/algo_competitions/cf404/A/... ~/algo_competitions/cf404/B/...
-#after ~3 seconds all examples are downloaded - much faster than copy pasting by hand
+#after ~2 seconds all examples are downloaded - much faster than copy pasting by hand
 fetch-cf-examples -l http://codeforces.com/contest/777 -n cf404
 ```
 or you can provide link to a problem (instead of link to a contest) - script will detect the contest automatically
