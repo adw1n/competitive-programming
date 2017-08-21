@@ -35,6 +35,14 @@ class Example:
             s += lxml.etree.tostring(child, encoding='unicode')
         return s.replace("<br/>", "\n")
 
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            return self.__dict__ == other.__dict__
+        return False
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
 
 class Problem:
     PROBLEM_LINK_PATTERN = re.compile(".*/contest/\d+/problem/(.+?)")
